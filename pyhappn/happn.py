@@ -26,7 +26,7 @@ from .settings import CLIENT_SECRET
 from .utils import CONVERSATION_FIELDS
 from .utils import DEFAULT_HEADERS
 from .utils import generate_settings
-from .utils import HTTP_ERRORS
+from .utils import HTTP_CODES
 from .utils import MESSAGE_FIELDS
 from .utils import NOTIFIER_FIELDS
 from .utils import USER_FIELDS
@@ -94,7 +94,7 @@ class User:
             self.lat = latitude
             self.lon = longitude
         else:
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def delete_user(self):
         """Delete user"""
@@ -121,7 +121,7 @@ class User:
                 'Server denied request for delete user: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def update_activity(self):
         """ Updates User activity """
@@ -148,7 +148,7 @@ class User:
         if response.status_code == 200:
             LOGGER.debug('Updated User activity')
         else:
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def create_device(self, payload=None):
         """Create new device"""
@@ -178,7 +178,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def set_device(self, payload=None):
         """Set device"""
@@ -209,7 +209,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_device(self):
         """Get device"""
@@ -235,7 +235,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_device_list(self):
         """List devices"""
@@ -261,7 +261,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def like_user(self, user_id):
         """ Like user
@@ -293,7 +293,7 @@ class User:
         if response.status_code == 200:
             LOGGER.debug('Liked User ' + str(user_id))
         else:
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def reject_user(self, user_id):
         """ Reject user
@@ -325,7 +325,7 @@ class User:
         if response.status_code == 200:
             LOGGER.debug('Reject User ' + str(user_id))
         else:
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def unreject_user(self, user_id):
         """ Unreject user
@@ -352,7 +352,7 @@ class User:
         if response.status_code == 200:
             LOGGER.debug('Unreject User ' + str(user_id))
         else:
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def reject_user_list(self, offset=0):
         """ Unreject user
@@ -379,7 +379,7 @@ class User:
         if response.status_code == 200:
             return response.json()['data']
         else:
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_recommendations(self, limit=16, offset=0):
         """ Get recs from Happn server
@@ -421,7 +421,7 @@ class User:
             return data
         else:
             LOGGER.warning('Error:  %d', response.status_code)
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_conversations(self, offset=0, limit=64):
         """ Get conversations with userID from Happn server
@@ -458,7 +458,7 @@ class User:
             return data
         else:
             LOGGER.warning('Error: %d', response.status_code)
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_user_info(self, user_id):
         """ Get conversations with userID from Happn server
@@ -494,7 +494,7 @@ class User:
             return data
         else:
             LOGGER.warning('Error: %s ', response.status_code)
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_my_info(self):
         """ Get conversations with userID from Happn server
@@ -529,7 +529,7 @@ class User:
             return data
         else:
             LOGGER.warning('Error: %s ', response.status_code)
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def send_message(self, conversation_id, message):
         """Send new message"""
@@ -557,7 +557,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_messages(self, conversation_id):
         """Send new message"""
@@ -584,7 +584,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_app_secret_proof(self):
         """Send new message"""
@@ -612,7 +612,7 @@ class User:
                 'Server denied request for device set change: %d',
                 response.status_code
             )
-            raise HTTPMethodError(HTTP_ERRORS[response.status_code])
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
 
     def get_oauth(self):
         """Gets the OAuth tokens using Happn's API """
