@@ -17,7 +17,7 @@ import string
 from random import choice
 from uuid import uuid4
 
-HTTP_ERRORS = {
+HTTP_CODES = {
     100: 'Continue',
     101: 'Switching Protocols',
     102: 'Processing',
