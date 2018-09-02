@@ -17,7 +17,7 @@ import string
 from random import choice
 from uuid import uuid4
 
-HTTP_ERRORS = {
+HTTP_CODES = {
     100: 'Continue',
     101: 'Switching Protocols',
     102: 'Processing',
@@ -125,39 +125,48 @@ APP_BUILD_LIST = [
 ]  # TODO: make dynamic way
 
 
-NOTIFIER_FIELDS = 'id,modification_date,notification_type,nb_times,' + \
-    'notifier.fields(id,type,job,fb_id,is_accepted,workplace,my_relation,' + \
-    'social_synchronization.fields(instagram.fields(username),facebook),distance,gender,' + \
-    'is_charmed,nb_photos,first_name,age,already_charmed,has_charmed_me,' + \
-    'availability,is_invited,last_invite_received,' + \
+NOTIFIER_FIELDS = (
+    'id,modification_date,notification_type,nb_times,'
+    'notifier.fields(id,type,job,fb_id,is_accepted,workplace,my_relation,'
+    'social_synchronization.fields(instagram.fields(username),facebook),'
+    'distance,gender,is_charmed,nb_photos,first_name,age,already_charmed,'
+    'has_charmed_me,availability,is_invited,last_invite_received,'
     'profiles.mode(1).width(360).height(640).fields(id,mode,url,width,height))'
+)
 
-CONVERSATION_FIELDS = 'creation_date,participants.fields(user.fields' + \
-    '(social_synchronization.fields(instagram,facebook),fb_id,' + \
-    'picture.fields(id,url,is_default).height(120).mode(0).width(120),age,' + \
-    'clickable_message_link,id,first_name,is_moderator)),modification_date,' + \
-    'id,messages.fields(sender.fields(id,first_name),creation_date,message,' + \
+CONVERSATION_FIELDS = (
+    'creation_date,participants.fields(user.fields'
+    '(social_synchronization.fields(instagram,facebook),fb_id,'
+    'picture.fields(id,url,is_default).height(120).mode(0).width(120),age,'
+    'clickable_message_link,id,first_name,is_moderator)),modification_date,'
+    'id,messages.fields(sender.fields(id,first_name),creation_date,message,'
     'id).offset(0).limit(3),is_read'
+)
 
-USER_FIELDS = 'credits,referal,matching_preferences,about,achievements,' + \
-    'availability,clickable_message_link,stats,subscription,' + \
-    'unread_notifications,unread_conversations,renewable_credits,' + \
-    'last_tos_version_accepted,birth_date,last_position_update,' + \
-    'last_meet_position,id,modification_date,job,is_accepted,workplace,' + \
-    'matching_preferences,register_date,segments,fb_id,social_synchronization.' + \
-    'fields(instagram),job,my_relation,distance,gender,modification_date,' + \
-    'is_charmed,nb_photos,first_name,age,already_charmed,has_charmed_me,' + \
-    'availability,is_invited,school,last_invite_received,profiles.mode(1)' + \
+USER_FIELDS = (
+    'credits,referal,matching_preferences,about,achievements,'
+    'availability,clickable_message_link,stats,subscription,'
+    'unread_notifications,unread_conversations,renewable_credits,'
+    'last_tos_version_accepted,birth_date,last_position_update,'
+    'last_meet_position,id,modification_date,job,is_accepted,workplace,'
+    'matching_preferences,register_date,segments,fb_id,social_synchronization.'
+    'fields(instagram),job,my_relation,distance,gender,modification_date,'
+    'is_charmed,nb_photos,first_name,age,already_charmed,has_charmed_me,'
+    'availability,is_invited,school,last_invite_received,profiles.mode(1)'
     '.width(92).height(92).fields(id,mode,url,width,height)'
+)
 
 
-FB_USER_FIELDS = 'family,albums,work,devices,friends,photos,likes,accounts,' + \
-    'gender,first_name,favorite_teams,birthday,age_range,name,cover,' + \
-    'address,about,picture.width(80).fields(url,cache_key).height(80),' + \
-    'context.fields(mutual_likes.fields(summary.fields(total_count),name,' + \
-    'picture.width(80).fields(url).height(80)),all_mutual_friends.' + \
-    'fields(summary.fields(total_count),picture.width(80).' + \
+FB_USER_FIELDS = (
+    'family,albums,work,devices,friends,photos,likes,accounts,'
+    'gender,first_name,favorite_teams,birthday,age_range,name,cover,'
+    'address,about,picture.width(80).fields(url,cache_key).height(80),'
+    'context.fields(mutual_likes.fields(summary.fields(total_count),name,'
+    'picture.width(80).fields(url).height(80)),all_mutual_friends.'
+    'fields(summary.fields(total_count),picture.width(80).'
     'fields(url,cache_key).height(80),name))'
+)
 
-MESSAGE_FIELDS = 'sender.fields(id,first_name),creation_date,message,' + \
-    'id'
+MESSAGE_FIELDS = (
+    'sender.fields(id,first_name),creation_date,message,id'
+)
