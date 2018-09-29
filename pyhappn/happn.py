@@ -86,9 +86,9 @@ class User:
         try:
             response = requests.put(
                 url, headers=headers, data=payload)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             self.lat = latitude
@@ -141,9 +141,9 @@ class User:
 
         try:
             response = requests.put(url, headers=headers, data=payload)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             LOGGER.debug('Updated User activity')
@@ -286,9 +286,9 @@ class User:
         try:
             response = requests.post(
                 url, headers=headers, data=payload)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             LOGGER.debug('Liked User ' + str(user_id))
@@ -346,8 +346,8 @@ class User:
         try:
             response = requests.delete(url, headers=headers)
         except Exception:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             LOGGER.debug('Unreject User ' + str(user_id))
@@ -372,9 +372,9 @@ class User:
 
         try:
             response = requests.get(url, headers=headers)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             return response.json()['data']
@@ -406,9 +406,9 @@ class User:
 
         try:
             response = requests.get(url, headers=headers)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             data = json.loads(
@@ -441,9 +441,9 @@ class User:
 
         try:
             response = requests.get(url, headers=headers)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
         if response.status_code == 200:
             data = json.loads(
                 json.dumps(
@@ -477,9 +477,9 @@ class User:
 
         try:
             response = requests.get(url, headers=headers)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             data = json.loads(
@@ -513,9 +513,9 @@ class User:
 
         try:
             response = requests.get(url, headers=headers)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             data = json.loads(
@@ -548,9 +548,9 @@ class User:
 
         try:
             response = requests.get(url, headers=headers)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             data = json.loads(
@@ -671,9 +671,9 @@ class User:
         try:
             response = requests.post(
                 url, headers=headers, data=payload)
-        except Exception as e:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
         else:
             data = response.json()
             status = response.status_code
