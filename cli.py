@@ -33,11 +33,31 @@ class HappnCli(object):
 
         for i in range(int(9800 / limit)):
             recs = user_inst.get_recommendations(limit, (i * limit))
-            for rec in recs:
-                relation = int(rec.get('notifier').get('my_relation'))
-                if relation == Relations.none:
-                    user_inst.like_user(rec['notifier']['id'])
-                    print('Like {}'.format(rec['notifier']['id']))
+            if recs:
+                for rec in recs:
+                    relation = int(rec.get('notifier').get('my_relation'))
+                    if relation == Relations.none:
+                        user_inst.like_user(rec['notifier']['id'])
+                        print('Like {}'.format(rec['notifier']['id']))
+            else:
+                break
+
+    def like_all_new_happners(self):
+        """Like all new happners"""
+
+        user_inst = User(TOKEN)
+        device_list = user_inst.get_device_list()
+        user_inst.set_device_id(device_list[0]['id'])
+        limit = 100
+
+        for i in range(int(9800 / limit)):
+            recs = user_inst.get_new_happners(limit)
+            if recs:
+                for rec in recs:
+                    user_inst.like_user(rec['id'])
+                    print('Like {}'.format(rec['id']))
+            else:
+                break
 
     def hidden_all(self):
         """Hidden all"""

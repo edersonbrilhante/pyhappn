@@ -423,6 +423,40 @@ class User:
             LOGGER.warning('Error:  %d', response.status_code)
             raise HTTPMethodError(HTTP_CODES[response.status_code])
 
+    def get_new_happners(self, limit=16, offset=0):
+        """ Get recs from Happn server
+            :param limit Number of reccomendations to recieve
+            :param offset Offset index for reccomendation list
+        """
+
+        headers = deepcopy(self.headers)
+        headers.update({
+            'Authorization': 'OAuth="{}"'.format(self.oauth),
+            'Content-Type': 'application/json',
+            'X-Happn-DID': self.device_id
+        })
+
+        url = 'https://api.happn.fr/api/suggested-users/' \
+            '?limit={}&fields={}'.format(limit, USER_FIELDS)
+
+        try:
+            response = requests.get(url, headers=headers)
+        except Exception as e:
+            LOGGER.exception('Error connecting to Facebook Server')
+            raise HTTPMethodError('Error connecting to Facebook Server')
+        if response.status_code == 200:
+            data = json.loads(
+                json.dumps(
+                    response.json()['data'],
+                    sort_keys=True,
+                    indent=4,
+                    separators=(',', ': ')
+                ))
+            return data
+        else:
+            LOGGER.warning('Error:  %d', response.status_code)
+            raise HTTPMethodError(HTTP_CODES[response.status_code])
+
     def get_conversations(self, offset=0, limit=64):
         """ Get conversations with userID from Happn server
             :param userID User ID of target user.
