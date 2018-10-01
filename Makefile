@@ -13,7 +13,10 @@ help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 setup: ## Install project dependencies
-	@pip install -r $(PROJECT_HOME)/requirements.txt
+	@pip install -r $(PROJECT_HOME)/requirements_test.txt
+
+tests: clean ## Make tests
+	@nosetests --verbose --rednose  --nocapture --cover-package=pyhappn --with-coverage; coverage report -m
 
 clean: ## Clear *.pyc files, etc
 	@rm -rf build dist *.egg-info
