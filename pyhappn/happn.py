@@ -45,13 +45,21 @@ class User:
 
     headers = DEFAULT_HEADERS
 
-    def __init__(self, fbtoken=None):
+    def __init__(self, fbtoken=None, username=None, password=None):
         """Constructor for generating the Happn User object
             :param fbtoken Facebook user access token used to fetch the Happn OAuth token
         """
+        if fbtoken is None and (username is None or password is None):
+            raise Exception('FBToken or crendentinals is required.')
+
         self.fbtoken = fbtoken
+        self.username = username
+        self.password = password
+
         self.oauth, self.id = self.get_oauth()
-        self.app_secret_proof = self.get_app_secret_proof()
+
+        if self.fbtoken:
+            self.app_secret_proof = self.get_app_secret_proof()
 
         LOGGER.debug('Happn User Generated. ID: %s', self.id)
 
@@ -319,8 +327,8 @@ class User:
             response = requests.post(
                 url, headers=headers, data=payload)
         except Exception:
-            LOGGER.exception('Error connecting to Facebook Server')
-            raise HTTPMethodError('Error connecting to Facebook Server')
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
 
         if response.status_code == 200:
             LOGGER.debug('Reject User ' + str(user_id))
@@ -657,14 +665,7 @@ class User:
             'Content-Length': '374'
         })
 
-        payload = {
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET,
-            'grant_type': 'assertion',
-            'assertion_type': 'facebook_access_token',
-            'assertion': self.fbtoken,
-            'scope': 'mobile_app'
-        }
+        payload = self._get_payload()
 
         url = 'https://api.happn.fr/connect/oauth/token/'
 
@@ -678,7 +679,65 @@ class User:
             data = response.json()
             status = response.status_code
             if response.ok:
+                print(data['access_token'])
                 return data['access_token'], data['user_id']
             else:
                 LOGGER.warning('Error: %d - %s', status, data)
                 raise HTTPMethodError(data, status)
+
+    def create_account(self, first_name, gender, birth_date, email,
+                       is_matching_male, is_matching_female):
+        """Create new account using Happn's API """
+
+        headers = deepcopy(self.headers)
+        headers.update({
+            'Content-Type': 'application/json',
+        })
+
+        payload = {
+            'first_name': first_name,
+            'gender': gender,
+            'birth_date': birth_date,
+            'email': email,
+            'is_matching_male': is_matching_male,
+            'is_matching_female': is_matching_female
+        }
+
+        url = 'https://api.happn.fr/api/users/account-creation-request'
+
+        try:
+            response = requests.post(
+                url, headers=headers, data=json.dumps(payload))
+        except Exception:
+            LOGGER.exception('Error connecting to Happn\'s Server')
+            raise HTTPMethodError('Error connecting to Happn\'s Server')
+        else:
+            status = response.status_code
+            if response.ok:
+                data = response.json()
+                return data['success']
+            else:
+                LOGGER.warning('Error: %d - %s', status, response.content)
+                raise HTTPMethodError(response.content, status)
+
+    def _get_payload(self):
+        if self.fbtoken:
+            payload = {
+                'client_id': CLIENT_ID,
+                'client_secret': CLIENT_SECRET,
+                'grant_type': 'assertion',
+                'assertion_type': 'facebook_access_token',
+                'assertion': self.fbtoken,
+                'scope': 'mobile_app'
+            }
+        else:
+            payload = {
+                'client_id': CLIENT_ID,
+                'client_secret': CLIENT_SECRET,
+                'grant_type': 'password',
+                'username': self.username,
+                'password': self.password,
+                'scope': 'mobile_app'
+            }
+
+        return payload
