@@ -117,6 +117,16 @@ def generate_gps_token():
     return complete_string
 
 
+def generate_gmail(email):
+    if len(email) <= 1:
+        yield email
+    else:
+        head, tail = email[0], email[1:]
+        for item in generate_gmail(tail):
+            yield head + item
+            yield head + '.' + item
+
+
 APP_BUILD_LIST = [
     '21.2.0',
     '20.48.0',

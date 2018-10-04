@@ -17,4 +17,6 @@ from decouple import config
 
 CLIENT_ID = config('CLIENT_ID')
 CLIENT_SECRET = config('CLIENT_SECRET')
-TOKEN = config('TOKEN')
+TOKEN = config('TOKEN', None)
+EMAIL = config('EMAIL', None)
+PASSWORD = config('PASSWORD', None)
