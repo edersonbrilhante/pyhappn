@@ -14,10 +14,17 @@
    limitations under the License.
 """
 import fire
+import names
 
+from pyhappn.exceptions import HTTPMethodError
 from pyhappn.happn import Relations
 from pyhappn.happn import User
+from pyhappn.happn_email import HappnEmail
+from pyhappn.mail import Mail
+from pyhappn.settings import EMAIL
+from pyhappn.settings import PASSWORD
 from pyhappn.settings import TOKEN
+from pyhappn.utils import generate_gmail
 
 
 class HappnCli(object):
@@ -118,6 +125,39 @@ class HappnCli(object):
                     msg = {'message': message}
                     user_inst.send_message(rec['id'], msg)
                     messages_sent.update({rec['id']: 1})
+
+    def create_account(self, number):
+        """Create new account"""
+
+        user_inst = User(TOKEN)
+        gen_email = generate_gmail(EMAIL)
+        first_name = names.get_first_name(gender='male')
+        try:
+            count = len(open('email.txt').readlines())
+        except OSError:
+            count = 0
+        for _ in range(0, count):
+            next(gen_email)
+        for _ in range(number):
+            email = next(gen_email)
+            try:
+                user_inst.create_account(
+                    first_name, 'MALE', '1980-02-02', email, False, True)
+            except HTTPMethodError as err:
+                print('Temporary block in cloudflare')
+                break
+            else:
+                mail = Mail()
+                url = None
+                while not url:
+                    url = mail.get_url_confirm(email)
+                happn_email = HappnEmail()
+                csrfmiddlewaretoken, token, cookies = happn_email.get_confirmation_page(
+                    url)
+                happn_email.confirmation_account(
+                    url, cookies, csrfmiddlewaretoken, token, PASSWORD)
+                with open('email.txt', 'a') as myfile:
+                    myfile.write(email + '\n')
 
 
 if __name__ == '__main__':
