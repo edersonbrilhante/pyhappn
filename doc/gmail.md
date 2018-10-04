@@ -20,12 +20,14 @@ export GAW_APPLICATION_NAME=HappnBot
 
 ### Quickstart;
 Run the sample using the following command:
-```python pyhappn/quickstart.py```
-a.The sample will attempt to open a new window or tab in your default browser. If this fails, copy the URL from the console and manually open it in your browser.
-<br>
-If you are not already logged into your Google account, you will be prompted to log in. If you are logged into multiple Google accounts, you will be asked to select one account to use for the authorization.<br>
-b. Click the Accept button.<br>
-c. The sample will proceed automatically, and you may close the window/tab.
 
-Path where token is created ~/.credentials/gmail-api-wrapper-py.json
+```python pyhappn/quickstart.py```
+
+- a. The sample will attempt to open a new window or tab in your default browser. If this fails, copy the URL from the console and manually open it in your browser. If you are not already logged into your Google account, you will be prompted to log in. If you are logged into multiple Google accounts, you will be asked to select one account to use for the authorization.
+
+- b. Click the Accept button.
+
+- c. The sample will proceed automatically, and you may close the window/tab.
+
+Path where token is created: ~/.credentials/gmail-api-wrapper-py.json.<br>
 To reset token just delete this file.
