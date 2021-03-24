@@ -24,7 +24,7 @@ setup(
     author='Ederson Brilhante',
     author_email='contato@edersonbrilhante.com.br',
     install_requires=[
-        'requests==2.10.0',
+        'requests==2.20.0',
     ],
     url='https://bitbucket.org/edersonbrilhante/happn',
     packages=['pyhappn'],
