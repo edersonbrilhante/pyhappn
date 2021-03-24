@@ -4,6 +4,6 @@ google-api-python-client==1.7.4
 names==0.3.0
 oauth2client==4.1.2
 python-decouple==3.1
-requests==2.19.1
+requests==2.20.0
 requests-html==0.9.0
 splinter==0.7.7
